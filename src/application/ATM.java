@@ -37,6 +37,7 @@ public class ATM {
 						break;
 					case 3: 
 						verfF=false;
+						break;
 					default:
 						System.out.println("OPCAO INVALIDA");
 					}
