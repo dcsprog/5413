@@ -1,4 +1,4 @@
-package mis;
+package misc;
 
 import java.util.ArrayList;
 
@@ -8,11 +8,9 @@ import model.Pessoa;
 public class MockupData {
 
 	public static ArrayList<Conta> conta;
-	public static ArrayList<Pessoa> pessoa;
 	
 	public MockupData(){
 		
 		conta  = new ArrayList<>();
-		pessoa = new ArrayList<>();
 	}
 }

@@ -8,10 +8,10 @@ public class Conta {
 	
 	
 	
-	public Conta(Pessoa pessoa) {
+	public Conta(int numeroConta,float saldo,Pessoa pessoa) {
 		super();
-		this.numeroConta = getNumeroConta()+1;
-		this.saldo = 0;
+		this.numeroConta = numeroConta;
+		this.saldo = saldo;
 		this.pessoa = pessoa;
 	}
 
