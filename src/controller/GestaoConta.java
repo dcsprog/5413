@@ -10,8 +10,11 @@ import model.Pessoa;
 public class GestaoConta {
 	
 	static Scanner n = new Scanner(System.in);
-	static MockupData bd = new MockupData();
+	static MockupData bd;
 	
+	public GestaoConta(){
+		bd = new MockupData();
+	}
 	
 	public void addConta(String nome){
 		
@@ -38,14 +41,16 @@ public class GestaoConta {
 			if(numConta==bd.conta.get(numConta).getNumeroConta()){
 				bd.conta.get(numConta).setSaldo(bd.conta.get(numConta).getSaldo()+valor);
 			}else{
-				System.out.println("\nNUMEO DE CONTA É INVALIDO\n");
+				System.out.println("\tNUMEO DE CONTA É INVALIDO\n");
 			}
 		}else{
-			System.out.println("\nNAO EXISTEM CONTAS REGISTADAS\n");
+			System.out.println("\tNAO EXISTEM CONTAS REGISTADAS\n");
 		}
+		
 	}
 	
 	public void levantar(int num, float valor){
+		
 		if(bd.conta.size()!=0){
 			if(num==bd.conta.get(num).getNumeroConta()){
 				if(valor<bd.conta.get(num).getSaldo()){

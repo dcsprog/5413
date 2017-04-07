@@ -9,10 +9,10 @@ public class ATM {
 
 	static Scanner n = new Scanner(System.in);
 	static Interface i = new Interface();
-	static MockupData bd = new MockupData();
+	static MockupData bd;
 	
 	public ATM(){
-		
+		bd = new MockupData();
 	}
 	
 	public static void main(String[] args) {
