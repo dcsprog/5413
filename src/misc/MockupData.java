@@ -9,12 +9,13 @@ import model.Pessoa;
 public class MockupData {
 
 	public static ArrayList<Conta> conta;
-	public static ArrayList<Carro> carro;
-	
+	public static ArrayList<Carro> carrosStand;
+	public static ArrayList<Pessoa> clientes;
 	
 	public MockupData(){
 		
 		conta = new ArrayList<>();
-		carro = new ArrayList<>();
+		carrosStand = new ArrayList<>();
+		clientes = new ArrayList<>();
 	}
 }

@@ -30,12 +30,12 @@ public class GestaoConta {
 			System.out.println("\n\n");
 			System.out.println("NUMERO DA CONTA: "+bd.conta.get(i).getNumeroConta());
 			System.out.println("NOME DO TITULAR: "+bd.conta.get(i).getPessoa().getNome());
-			System.out.println("SALDO: "+bd.conta.get(i).getSaldo());
+			System.out.println("SALDO: € "+bd.conta.get(i).getSaldo());
 			System.out.println("\n\n");
 		}
 	}
 	
-	public void depositar(int numConta, float valor){
+	public void depositar(int numConta, double valor){
 
 		if(bd.conta.size()!=0){
 			if(numConta==bd.conta.get(numConta).getNumeroConta()){

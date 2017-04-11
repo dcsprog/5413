@@ -5,9 +5,7 @@ public class Conta {
 	public Conta(){
 		
 	}
-	
-	
-	
+
 	public Conta(int numeroConta,float saldo,Pessoa pessoa) {
 		super();
 		this.numeroConta = numeroConta;
@@ -15,10 +13,8 @@ public class Conta {
 		this.pessoa = pessoa;
 	}
 
-
-
 	private int numeroConta;
-	private float saldo;
+	private double saldo;
 	private Pessoa pessoa;
 	
 	public int getNumeroConta() {
@@ -27,10 +23,10 @@ public class Conta {
 	public void setNumeroConta(int numeroConta) {
 		this.numeroConta = numeroConta;
 	}
-	public float getSaldo() {
+	public double getSaldo() {
 		return saldo;
 	}
-	public void setSaldo(float saldo) {
+	public void setSaldo(double saldo) {
 		this.saldo = saldo;
 	}
 	public Pessoa getPessoa() {
