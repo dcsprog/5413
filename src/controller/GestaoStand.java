@@ -19,17 +19,21 @@ public class GestaoStand {
 	}
 	
 	public void listar(Stand s){
+		
 		System.out.println("NUMERO DO NIF: "+s.getNumeroNIF());
 		System.out.println("NOME DO STAND: "+s.getNomeStand());
 		System.out.println("MORADA DO STAND: "+s.getMorada());
 		System.out.println("TELEFONE DO STAND: "+s.getTelefone());
 		System.out.println("NUMERO DA CONTA STAND: "+s.getContaBancaria().getNumeroConta());
 		System.out.println("SALDO DA CONTA STAND: "+s.getContaBancaria().getSaldo());
+		
 	}
 	
 	public void addCliente(String nome){
+		
 		Pessoa p = new Pessoa(nome);
 		bd.clientes.add(p);
+	
 	}
 	
 	public void comprarCarro(String marca, String modelo, String placa, double preco, Stand s){

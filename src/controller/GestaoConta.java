@@ -27,16 +27,16 @@ public class GestaoConta {
 	public void listarContas(){
 		
 		for(int i=0;i < bd.conta.size();i++){
-			System.out.println("\n\n");
+			System.out.println("\n");
 			System.out.println("NUMERO DA CONTA: "+bd.conta.get(i).getNumeroConta());
 			System.out.println("NOME DO TITULAR: "+bd.conta.get(i).getPessoa().getNome());
 			System.out.println("SALDO: € "+bd.conta.get(i).getSaldo());
-			System.out.println("\n\n");
+			System.out.println("\n");
 		}
 	}
 	
 	public void depositar(int numConta, double valor){
-
+		//numConta-=1;
 		if(bd.conta.size()!=0){
 			if(numConta==bd.conta.get(numConta).getNumeroConta()){
 				bd.conta.get(numConta).setSaldo(bd.conta.get(numConta).getSaldo()+valor);
@@ -50,7 +50,7 @@ public class GestaoConta {
 	}
 	
 	public void levantar(int num, float valor){
-		
+	//	num-=1;
 		if(bd.conta.size()!=0){
 			if(num==bd.conta.get(num).getNumeroConta()){
 				if(valor<bd.conta.get(num).getSaldo()){
@@ -68,7 +68,8 @@ public class GestaoConta {
 	}
 	
 	public void transferir(int numContaR, int numContaD){
-
+		//numContaR-=1;
+		//numContaD-=1;
 		if(bd.conta.size()!=0){
 			if(numContaR==bd.conta.get(numContaR).getNumeroConta()){
 				System.out.println("INTRODUZA O VALOR A TRANSFEREIR: ");
@@ -93,7 +94,7 @@ public class GestaoConta {
 	
 	
 	public float verificarSaldo(int num){
-
+		//num-=1;
 		float cs=0;
 		for(int i=0; i<bd.conta.size();i++){
 			if(num==bd.conta.get(i).getNumeroConta()){
