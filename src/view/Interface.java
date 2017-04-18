@@ -54,10 +54,23 @@ public class Interface {
 	
 	
 	public void regConta(){
-		
+		String senha, senhaRep;
+		boolean verf=true;
 		System.out.println("INTRODUZA O NOME DO TITULAR: ");
 		String nome = n.nextLine();
-		g.addConta(nome);	
+		do{
+			System.out.println("INTRODUZA A SENHA: ");
+			senha = n.nextLine();
+			System.out.println("INTRODUZA A SENHA NOVAMENTE: ");
+			senhaRep = n.nextLine();
+			if(senha.equals(senhaRep)){
+				verf=false;
+			}else{
+				System.out.println("AS SENHAS INSERIDAS NAO CORRESPONDEM");
+			}
+		}while(verf);
+		
+		g.addConta(nome,senha);	
 	}
 	
 	public void listContas(){
@@ -102,4 +115,5 @@ public class Interface {
 		float c = g.verificarSaldo(num);
 		System.out.println("SALDO: "+c);
 	}
+	
 }

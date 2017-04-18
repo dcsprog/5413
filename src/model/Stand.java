@@ -8,7 +8,7 @@ public class Stand {
 	
 	public Stand(int numeroNIF,String nomeStand, String morada, String telefone, Conta contaBancaria) {
 		super();
-		this.setNumeroNIF(numeroNIF);
+		this.numeroNIF = numeroNIF;
 		this.nomeStand = nomeStand;
 		this.morada = morada;
 		this.telefone = telefone;

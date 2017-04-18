@@ -11,9 +11,11 @@ public class MockupData {
 	public static ArrayList<Conta> conta;
 	public static ArrayList<Carro> carrosStand;
 	public static ArrayList<Pessoa> clientes;
+	public static boolean existe;
 	
 	public MockupData(){
 		
+		existe = false;
 		conta = new ArrayList<>();
 		carrosStand = new ArrayList<>();
 		clientes = new ArrayList<>();

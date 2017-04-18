@@ -3,6 +3,8 @@ package controller;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 import misc.MockupData;
 import model.Conta;
 import model.Pessoa;
@@ -16,10 +18,10 @@ public class GestaoConta {
 		bd = new MockupData();
 	}
 	
-	public void addConta(String nome){
+	public void addConta(String nome, String senha){
 		
 		Pessoa p = new Pessoa(nome);
-		bd.conta.add(new Conta(bd.conta.size(),0,p));
+		bd.conta.add(new Conta(bd.conta.size(),0,p,senha));
 		
 	}
 	
@@ -41,10 +43,12 @@ public class GestaoConta {
 			if(numConta==bd.conta.get(numConta).getNumeroConta()){
 				bd.conta.get(numConta).setSaldo(bd.conta.get(numConta).getSaldo()+valor);
 			}else{
-				System.out.println("\tNUMEO DE CONTA É INVALIDO\n");
+				//System.out.println("\tNUMEO DE CONTA É INVALIDO\n");
+				JOptionPane.showMessageDialog(null, "NUMEO DE CONTA É INVALIDO!",null,JOptionPane.INFORMATION_MESSAGE);
 			}
 		}else{
-			System.out.println("\tNAO EXISTEM CONTAS REGISTADAS\n");
+			//System.out.println("\tNAO EXISTEM CONTAS REGISTADAS\n");
+			JOptionPane.showMessageDialog(null, "NAO EXISTEM CONTAS REGISTADAS",null,JOptionPane.INFORMATION_MESSAGE);
 		}
 		
 	}
@@ -56,14 +60,17 @@ public class GestaoConta {
 				if(valor<bd.conta.get(num).getSaldo()){
 					bd.conta.get(num).setSaldo(bd.conta.get(num).getSaldo()-valor);
 				}else{
-					System.out.println("\nSALDO INSUFICIENTE\n");
+					//System.out.println("\nSALDO INSUFICIENTE\n");
+					JOptionPane.showMessageDialog(null, "SALDO INSUFICIENTE!",null,JOptionPane.INFORMATION_MESSAGE);
 				}
 				
 			}else{
-				System.out.println("\nNUMEO DE CONTA É INVALIDO\n");
+				//System.out.println("\nNUMEO DE CONTA É INVALIDO\n");
+				JOptionPane.showMessageDialog(null, "NUMEO DE CONTA É INVALIDO!",null,JOptionPane.INFORMATION_MESSAGE);
 			}
 		}else{
-			System.out.println("\nNAO EXISTEM CONTAS REGISTADAS\n");
+			//System.out.println("\nNAO EXISTEM CONTAS REGISTADAS\n");
+			JOptionPane.showMessageDialog(null, "NAO EXISTEM CONTAS REGISTADAS",null,JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	
@@ -79,16 +86,20 @@ public class GestaoConta {
 					if(numContaD==bd.conta.get(numContaD).getNumeroConta()){
 						bd.conta.get(numContaD).setSaldo(bd.conta.get(numContaD).getSaldo()+v);
 					}else{
-						System.out.println("NUMERO DA CONTA DO DESTINO E INVALIDO");
+						//System.out.println("NUMERO DA CONTA DO DESTINO E INVALIDO");
+						JOptionPane.showMessageDialog(null, "NUMEO DE CONTA DO DESTINO É INVALIDO!",null,JOptionPane.INFORMATION_MESSAGE);
 					}
 				}else{
-					System.out.println("SALDO INSUFICIENTE");
+					//System.out.println("SALDO INSUFICIENTE");
+					JOptionPane.showMessageDialog(null, "SALDO INSUFICIENTE!",null,JOptionPane.INFORMATION_MESSAGE);
 				}
 			}else{
-				System.out.println("\nNUMERO DE CONTA É INVALIDO\n");
+				//System.out.println("\nNUMERO DE CONTA É INVALIDO\n");
+				JOptionPane.showMessageDialog(null, "NUMEO DE CONTA É INVALIDO!",null,JOptionPane.INFORMATION_MESSAGE);
 			}		
 		}else{
-			System.out.println("\nNAO EXISTEM CONTAS REGISTADAS\n");
+			//System.out.println("\nNAO EXISTEM CONTAS REGISTADAS\n");
+			JOptionPane.showMessageDialog(null, "NAO EXISTEM CONTAS REGISTADAS",null,JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	

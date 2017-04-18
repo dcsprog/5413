@@ -2,20 +2,24 @@ package model;
 
 public class Conta {
 
+	
+
 	public Conta(){
 		
 	}
 
-	public Conta(int numeroConta,float saldo,Pessoa pessoa) {
+	public Conta(int numeroConta,double saldo,Pessoa pessoa,String senha) {
 		super();
 		this.numeroConta = numeroConta;
 		this.saldo = saldo;
 		this.pessoa = pessoa;
+		this.setSenha(senha);
 	}
 
 	private int numeroConta;
 	private double saldo;
 	private Pessoa pessoa;
+	private String senha;
 	
 	public int getNumeroConta() {
 		return numeroConta;
@@ -34,6 +38,14 @@ public class Conta {
 	}
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 	
 	

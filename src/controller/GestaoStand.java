@@ -18,7 +18,7 @@ public class GestaoStand {
 		Stand s = new Stand(nif,nomeStand,morada,telefone,contaBancaria);
 	}
 	
-	public void listar(Stand s){
+	public void dadosStand(Stand s){
 		
 		System.out.println("NUMERO DO NIF: "+s.getNumeroNIF());
 		System.out.println("NOME DO STAND: "+s.getNomeStand());
@@ -36,12 +36,21 @@ public class GestaoStand {
 	
 	}
 	
-	public void comprarCarro(String marca, String modelo, String placa, double preco, Stand s){
+	public void comprarCarroDoCli(String marca, String modelo, String placa, double preco, Stand s){
 
 		if(preco<=s.getContaBancaria().getSaldo()){
 			Carro c = new Carro(bd.carrosStand.size(), marca, modelo, placa, preco);
 			bd.carrosStand.add(c);
 			s.setContaBancaria(s.getContaBancaria().getSaldo()-preco);
+		}
+	}
+	
+	public void venderCarroAoCli(String marca, String modelo, String placa, double preco, Stand s,int numConta){
+
+		if(preco<=bd.conta.get(numConta).getSaldo()){
+			Carro c = new Carro(bd.carrosStand.size(), marca, modelo, placa, preco);
+			bd.carrosStand.remove(c);
+			s.setContaBancaria(s.getContaBancaria().getSaldo()+preco);
 		}
 	}
 }
