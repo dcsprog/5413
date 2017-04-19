@@ -22,8 +22,10 @@ import application.ATM;
 import controller.GestaoConta;
 import controller.GestaoStand;
 import misc.MockupData;
+import model.Carro;
 import model.Conta;
 import model.Pessoa;
+import model.Stand;
 
 import java.awt.SystemColor;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -49,6 +51,8 @@ public class InterfaceSwing {
 	private JFrame janelaRegStand;
 	private JFrame janelaLevantar;
 	private JFrame janelaTransferir;
+	private JFrame janelaComprarCarro;
+	private JFrame janelaVenderCarro;
 	private JTextField textFieldNome;
 	private JTextField textFieldNumero;
 	private JTextField textFieldSaldo;
@@ -61,6 +65,7 @@ public class InterfaceSwing {
 	private JPasswordField passwordFieldLogin;
 	
 	static int id;
+	static int idC;
 	//static int idLog;
 	//static int cont=0;
 	static MockupData bd;
@@ -145,7 +150,7 @@ public class InterfaceSwing {
 	}
 
 	
-	
+	///AQUI COMECA O CODIGO DAS INTERFACES DO STAND
 	
 	public void menuPrincipalStand() {
 		
@@ -184,6 +189,8 @@ public class InterfaceSwing {
 		JButton btnCliente = new JButton("CLIENTE");
 		btnCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				janelaPrincipalStand.setVisible(false);
+				menuStandCli();
 			}
 		});
 		btnCliente.setFont(new Font("Century Gothic", Font.BOLD, 11));
@@ -253,29 +260,33 @@ public class InterfaceSwing {
 		btnComprarCarro.setFont(new Font("Century Gothic", Font.BOLD, 11));
 		btnComprarCarro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
+				janelaStand.setVisible(false);
+				venderCarroCli();
 			}
 		});
 		btnComprarCarro.setForeground(Color.DARK_GRAY);
-		btnComprarCarro.setBackground(SystemColor.activeCaptionBorder);
+		//btnComprarCarro.setBackground(Color.WHITE);
 		
 		JButton btnVenderCarro = new JButton("VENDER CARRO");
 		btnVenderCarro.setFont(new Font("Century Gothic", Font.BOLD, 11));
 		btnVenderCarro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				janelaStand.setVisible(false);
+				comprarCarroCli();
 			}
 		});
 		btnVenderCarro.setForeground(Color.DARK_GRAY);
-		btnVenderCarro.setBackground(SystemColor.activeCaptionBorder);
+		//btnVenderCarro.setBackground(Color.WHITE);
 		
 		JButton btnNewButton = new JButton("SAIR");
 		btnNewButton.setFont(new Font("Century Gothic", Font.BOLD, 11));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				janelaStand.setVisible(false);
+				menuPrincipalStand();
 			}
 		});
-		btnNewButton.setBackground(SystemColor.activeCaptionBorder);
+		//btnNewButton.setBackground(Color.DARK_GRAY);
 		btnNewButton.setForeground(Color.DARK_GRAY);
 		GroupLayout groupLayout = new GroupLayout(janelaStand.getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -308,7 +319,7 @@ public class InterfaceSwing {
 	}
 	
 	
-public void menuFuncionarioStand() {
+	public void menuFuncionarioStand() {
 		
 		janelaFuncionarioStand = new JFrame();
 		janelaFuncionarioStand.setResizable(false);
@@ -524,6 +535,413 @@ public void menuFuncionarioStand() {
 	janelaRegStand.getContentPane().setLayout(groupLayout);
 	
 	}
+	
+	
+	
+	private void comprarCarroCli() {
+		
+		janelaComprarCarro = new JFrame();
+		janelaComprarCarro.setType(Type.UTILITY);
+		janelaComprarCarro.getContentPane().setBackground(SystemColor.desktop);
+		janelaComprarCarro.setResizable(false);
+		janelaComprarCarro.setLocationRelativeTo(null);
+		
+		janelaComprarCarro.setVisible(true);
+		
+		JLabel lblNomeStand = new JLabel("STAND "+bd.reg.getNomeStand()+" ,LDA");
+		lblNomeStand.setFont(new Font("Century Gothic", Font.BOLD, 24));
+		lblNomeStand.setForeground(SystemColor.textHighlightText);
+		
+		JLabel lblNewLabel = new JLabel("MARCA");
+		lblNewLabel.setForeground(SystemColor.textHighlightText);
+		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 11));
+		
+		JLabel lblModelo = new JLabel("MODELO");
+		lblModelo.setForeground(Color.WHITE);
+		lblModelo.setFont(new Font("Century Gothic", Font.BOLD, 11));
+		
+		JLabel lblPlaca = new JLabel("PLACA");
+		lblPlaca.setForeground(Color.WHITE);
+		lblPlaca.setFont(new Font("Century Gothic", Font.BOLD, 11));
+		
+		JLabel lblPreco = new JLabel("PRECO");
+		lblPreco.setForeground(Color.WHITE);
+		lblPreco.setFont(new Font("Century Gothic", Font.BOLD, 11));
+		
+		JTextField textFieldMarca = new JTextField();
+		textFieldMarca.setColumns(10);
+		
+		JTextField textFieldModelo = new JTextField();
+		textFieldModelo.setColumns(10);
+		
+		JTextField textFieldPlaca = new JTextField();
+		textFieldPlaca.setColumns(10);
+		
+		JTextField textFieldPreco = new JTextField();
+		textFieldPreco.setColumns(10);
+		
+		JButton btnNewButton = new JButton("CONFIRMAR");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Conta c = null;
+				for(Conta d:bd.conta){
+					if(bd.reg.getContaBancaria().getNumeroConta()==d.getNumeroConta()){
+						c=d;
+					}
+				}
+				Stand s = new Stand(bd.reg.getNumeroNIF(),bd.reg.getNomeStand(),bd.reg.getMorada(),bd.reg.getTelefone(),c);
+				gs.comprarCarroDoCli(textFieldMarca.getText(), textFieldModelo.getText(), textFieldPlaca.getText(), Double.parseDouble(textFieldPreco.getText()), s);
+				janelaComprarCarro.setVisible(false);
+				menuStandCli();
+			}
+		});
+		
+		JButton btnAnular = new JButton("ANULAR");
+		btnAnular.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				janelaComprarCarro.setVisible(false);
+				menuStandCli();
+			}
+		});
+		GroupLayout groupLayout = new GroupLayout(janelaComprarCarro.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(204)
+							.addComponent(lblNomeStand))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(80)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(btnAnular, GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+									.addGap(18)
+									.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblPlaca, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(textFieldPlaca, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+											.addGap(18)
+											.addComponent(lblPreco, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(textFieldMarca, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+											.addGap(18)
+											.addComponent(lblModelo, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(textFieldModelo, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+										.addComponent(textFieldPreco, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE))))
+							.addGap(6)))
+					.addGap(69))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(37)
+					.addComponent(lblNomeStand)
+					.addGap(36)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblNewLabel)
+							.addComponent(textFieldMarca, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblModelo, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+							.addComponent(textFieldModelo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+							.addComponent(textFieldPreco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblPreco, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblPlaca, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+							.addComponent(textFieldPlaca, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnAnular)
+						.addComponent(btnNewButton))
+					.addContainerGap(46, Short.MAX_VALUE))
+		);
+		janelaComprarCarro.getContentPane().setLayout(groupLayout);
+		janelaComprarCarro.setBounds(100, 100, 597, 276);
+		janelaComprarCarro.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	
+	private void venderCarroCli() {
+		
+		janelaVenderCarro = new JFrame();
+		janelaVenderCarro.setType(Type.UTILITY);
+		janelaVenderCarro.getContentPane().setBackground(SystemColor.desktop);
+		janelaVenderCarro.setBounds(100, 100, 597, 379);
+		janelaVenderCarro.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		janelaVenderCarro.setResizable(false);
+		janelaVenderCarro.setLocationRelativeTo(null);
+	
+		janelaVenderCarro.setVisible(true);
+	
+		JLabel lblNomeStand = new JLabel("STAND "+bd.reg.getNomeStand()+" ,LDA");
+		lblNomeStand.setFont(new Font("Century Gothic", Font.BOLD, 24));
+		lblNomeStand.setForeground(SystemColor.textHighlightText);
+	
+		JLabel lblNewLabel = new JLabel("MARCA");
+		lblNewLabel.setForeground(SystemColor.textHighlightText);
+		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 11));
+	
+		JLabel lblModelo = new JLabel("MODELO");
+		lblModelo.setForeground(Color.WHITE);
+		lblModelo.setFont(new Font("Century Gothic", Font.BOLD, 11));
+	
+		JLabel lblPlaca = new JLabel("PLACA");
+		lblPlaca.setForeground(Color.WHITE);
+		lblPlaca.setFont(new Font("Century Gothic", Font.BOLD, 11));
+	
+		JLabel lblPreco = new JLabel("PRECO");
+		lblPreco.setForeground(Color.WHITE);
+		lblPreco.setFont(new Font("Century Gothic", Font.BOLD, 11));
+	
+		JTextField textFieldMarca = new JTextField();
+		textFieldMarca.setColumns(10);
+	
+		JTextField textFieldModelo = new JTextField();
+		textFieldModelo.setColumns(10);
+	
+		JTextField textFieldPlaca = new JTextField();
+		textFieldPlaca.setColumns(10);
+	
+		JTextField textFieldPreco = new JTextField();
+		textFieldPreco.setColumns(10);
+	
+	
+		JLabel lblDadosDaConta = new JLabel("DADOS DA CONTA BANCARIA");
+		lblDadosDaConta.setForeground(Color.WHITE);
+		lblDadosDaConta.setFont(new Font("Century Gothic", Font.BOLD, 11));
+	
+		JLabel lblNome = new JLabel("NOME:");
+		lblNome.setForeground(Color.WHITE);
+		lblNome.setFont(new Font("Century Gothic", Font.BOLD, 11));
+	
+		JTextField txtNomeBanco = new JTextField();
+		txtNomeBanco.setColumns(10);
+	
+		JLabel lblNumero = new JLabel("NUMERO");
+		lblNumero.setForeground(Color.WHITE);
+		lblNumero.setFont(new Font("Century Gothic", Font.BOLD, 11));
+	
+		JTextField txtNumeroBanco = new JTextField();
+		txtNumeroBanco.setColumns(10);
+	
+		JLabel lblDadosDoVeiculo = new JLabel("DADOS DO VEICULO");
+		lblDadosDoVeiculo.setForeground(Color.WHITE);
+		lblDadosDoVeiculo.setFont(new Font("Century Gothic", Font.BOLD, 11));
+	
+		if(!bd.carrosStand.isEmpty()){
+			textFieldMarca.setText(bd.carrosStand.get(0).getMarca());
+			textFieldModelo.setText(bd.carrosStand.get(0).getModelo());
+			textFieldPlaca.setText(bd.carrosStand.get(0).getPlaca());
+			textFieldPreco.setText(Double.toString(bd.carrosStand.get(0).getPreco()));
+		}else{
+			janelaVenderCarro.setVisible(false);
+			JOptionPane.showMessageDialog(null, "NAO EXISTEM MAIS REGISTOS!",null,JOptionPane.INFORMATION_MESSAGE);
+			//menuBanco();
+		}
+	
+		JButton btnNewButton = new JButton("CONFIRMAR");
+		btnNewButton.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+			
+			//String marca, String modelo, String placa, double preco, Stand s,int numConta
+			Conta cliente = null;
+			for(Conta cli:bd.conta){
+				int n =Integer.parseInt(txtNumeroBanco.getText());
+				int n2 = cli.getNumeroConta();
+				if(txtNomeBanco.getText().equals(cli.getPessoa().getNome())&& n==n2){
+					cliente=cli;
+				}
+			}
+			
+			Conta c = null;
+			for(Conta d:bd.conta){
+				if(bd.reg.getContaBancaria().getNumeroConta()==d.getNumeroConta()){
+					c=d;
+				}
+			}
+			Stand s = new Stand(bd.reg.getNumeroNIF(),bd.reg.getNomeStand(),bd.reg.getMorada(),bd.reg.getTelefone(),c);
+			gs.venderCarroAoCli(bd.carrosStand.get(idC).getIdCar(),textFieldMarca.getText(), textFieldModelo.getText(), textFieldPlaca.getText(), Double.parseDouble(textFieldPreco.getText()), s, cliente.getNumeroConta());
+			//gs.comprarCarroDoCli(textFieldMarca.getText(), textFieldModelo.getText(), textFieldPlaca.getText(), Double.parseDouble(textFieldPreco.getText()), s);
+			janelaVenderCarro.setVisible(false);
+			menuStandCli();
+		}
+		});
+	
+		JButton btnAnular = new JButton("ANULAR");
+		btnAnular.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			janelaVenderCarro.setVisible(false);
+			menuStandCli();
+			}
+		});
+	
+		JButton btnAnterior = new JButton("ANTERIOR");
+		btnAnterior.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				if(idC<bd.carrosStand.size()){
+					idC--;
+					for(Carro c: bd.carrosStand){
+						if(idC==bd.carrosStand.get(idC).getIdCar()){
+							textFieldMarca.setText(bd.carrosStand.get(idC).getMarca());
+							textFieldModelo.setText(bd.carrosStand.get(idC).getModelo());
+							textFieldPlaca.setText(bd.carrosStand.get(idC).getPlaca());
+							textFieldPreco.setText(Double.toString(bd.carrosStand.get(idC).getPreco()));
+						}
+					}
+				}else{
+					JOptionPane.showMessageDialog(null, "NAO EXISTEM MAIS CARROS!",null,JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+			catch (Exception e1) {
+				e1.getCause();
+			}
+			
+		
+		}
+	});
+	
+	JButton btnProximo = new JButton("PROXIMO");
+	btnProximo.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			
+			try {
+			if(idC<bd.carrosStand.size()){
+				idC++;
+				for(Carro c: bd.carrosStand){
+					if(idC==bd.carrosStand.get(idC).getIdCar()){
+						textFieldMarca.setText(bd.carrosStand.get(idC).getMarca());
+						textFieldModelo.setText(bd.carrosStand.get(idC).getModelo());
+						textFieldPlaca.setText(bd.carrosStand.get(idC).getPlaca());
+						textFieldPreco.setText(Double.toString(bd.carrosStand.get(idC).getPreco()));
+					}
+				}
+			}else{
+				JOptionPane.showMessageDialog(null, "NAO EXISTEM MAIS CARROS!",null,JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+		catch (Exception e1) {
+			e1.getCause();
+		}
+		}
+	});
+	
+	GroupLayout groupLayout = new GroupLayout(janelaVenderCarro.getContentPane());
+	groupLayout.setHorizontalGroup(
+		groupLayout.createParallelGroup(Alignment.LEADING)
+			.addGroup(groupLayout.createSequentialGroup()
+				.addContainerGap(171, Short.MAX_VALUE)
+				.addComponent(lblNomeStand)
+				.addGap(146))
+			.addGroup(groupLayout.createSequentialGroup()
+				.addGap(80)
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGroup(groupLayout.createSequentialGroup()
+						.addComponent(lblDadosDoVeiculo, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap())
+					.addGroup(groupLayout.createSequentialGroup()
+						.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(txtNomeBanco, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+						.addGap(18)
+						.addComponent(lblNumero, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(txtNumeroBanco, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+						.addGap(76))
+					.addGroup(groupLayout.createSequentialGroup()
+						.addComponent(lblDadosDaConta)
+						.addContainerGap())
+					.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+							.addGroup(groupLayout.createSequentialGroup()
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+									.addComponent(lblPlaca, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addGroup(groupLayout.createSequentialGroup()
+										.addComponent(textFieldPlaca, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+										.addGap(18)
+										.addComponent(lblPreco, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE))
+									.addGroup(groupLayout.createSequentialGroup()
+										.addComponent(textFieldMarca, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+										.addGap(18)
+										.addComponent(lblModelo, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)))
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addComponent(textFieldModelo, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+									.addComponent(textFieldPreco, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)))
+							.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+									.addComponent(btnAnterior, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(btnAnular, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
+								.addGap(26)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addComponent(btnProximo, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+									.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))
+						.addGap(75))))
+	);
+	groupLayout.setVerticalGroup(
+		groupLayout.createParallelGroup(Alignment.LEADING)
+			.addGroup(groupLayout.createSequentialGroup()
+				.addGap(23)
+				.addComponent(lblNomeStand)
+				.addGap(27)
+				.addComponent(lblDadosDaConta, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+				.addGap(18)
+				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+					.addComponent(txtNomeBanco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addComponent(lblNumero, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+					.addComponent(txtNumeroBanco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+				.addGap(26)
+				.addComponent(lblDadosDoVeiculo, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel)
+						.addComponent(textFieldMarca, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblModelo, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textFieldModelo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+				.addGap(18)
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textFieldPreco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblPreco, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblPlaca, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textFieldPlaca, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGroup(groupLayout.createSequentialGroup()
+						.addGap(17)
+						.addComponent(btnAnterior))
+					.addGroup(groupLayout.createSequentialGroup()
+						.addGap(18)
+						.addComponent(btnProximo)))
+				.addPreferredGap(ComponentPlacement.UNRELATED)
+				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(btnAnular)
+					.addComponent(btnNewButton))
+				.addGap(24))
+	);
+	janelaVenderCarro.getContentPane().setLayout(groupLayout);
+	
+}
+
+
+///AQUI COMECA O CODIGO DAS INTERFACES DO BANCO
 	
 	public void menuBanco(){
 		

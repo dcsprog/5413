@@ -1,5 +1,7 @@
 package controller;
 
+import javax.swing.JOptionPane;
+
 import misc.MockupData;
 import model.Carro;
 import model.Conta;
@@ -59,18 +61,25 @@ public class GestaoStand {
 			Conta c1 = new Conta(s.getContaBancaria().getNumeroConta(),s.getContaBancaria().getSaldo()-preco,ps,s.getContaBancaria().getSenha());
 			//s.setContaBancaria(s.getContaBancaria().getSaldo()-preco);
 			bd.reg.setContaBancaria(c1);
+			JOptionPane.showMessageDialog(null, "COMPRA EFETUADA COM SUCESSO",null,JOptionPane.INFORMATION_MESSAGE);
+		}else{
+			JOptionPane.showMessageDialog(null, "SALDO INSUFICIENTE",null,JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	
-	public void venderCarroAoCli(String marca, String modelo, String placa, double preco, Stand s,int numConta){
+	public void venderCarroAoCli(int id,String marca, String modelo, String placa, double preco, Stand s,int numConta){
 
 		if(preco<=bd.conta.get(numConta).getSaldo()){
-			Carro c = new Carro(bd.carrosStand.size(), marca, modelo, placa, preco);
+			Carro c = new Carro(id, marca, modelo, placa, preco);
 			bd.carrosStand.remove(c);
 			//s.setContaBancaria(s.getContaBancaria().getSaldo()+preco);
 			String p= s.getContaBancaria().getPessoa().getNome();
 			Pessoa ps = new Pessoa(p);
 			Conta c1 = new Conta(s.getContaBancaria().getNumeroConta(),s.getContaBancaria().getSaldo()+preco,ps,s.getContaBancaria().getSenha());
+			bd.reg.setContaBancaria(c1);
+			JOptionPane.showMessageDialog(null, "VENDA EFETUADA COM SUCESSO",null,JOptionPane.INFORMATION_MESSAGE);
+		}else{
+			JOptionPane.showMessageDialog(null, "O CLIENTE NAO TEM SALDO SUFICIENTE",null,JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 }
