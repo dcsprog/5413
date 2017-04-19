@@ -42,6 +42,7 @@ public class Stand {
 	public Conta getContaBancaria() {
 		return contaBancaria;
 	}
+	
 	public void setContaBancaria(Conta contaBancaria) {
 		this.contaBancaria = contaBancaria;
 	}
@@ -54,10 +55,6 @@ public class Stand {
 		this.numeroNIF = numeroNIF;
 	}
 
-	public void setContaBancaria(double d) {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 	

@@ -14,19 +14,32 @@ public class GestaoStand {
 		bd = new MockupData();
 	}
 	
-	public void add(int nif,String nomeStand, String morada, String telefone, Conta contaBancaria){
-		Stand s = new Stand(nif,nomeStand,morada,telefone,contaBancaria);
+	public void addStand(int nif,String nomeStand, String morada, String telefone){
+		final String pass ="1234"; 
+		Pessoa p = new Pessoa(nomeStand);
+		Conta c;
+		bd.conta.add(c = new Conta(bd.conta.size(),50000,p,pass));
+		bd.reg.setNumeroNIF(nif);
+		bd.reg.setNomeStand(nomeStand);
+		bd.reg.setMorada(morada);
+		bd.reg.setTelefone(telefone);
+		bd.reg.setContaBancaria(c);
 	}
 	
-	public void dadosStand(Stand s){
+	public Stand dadosStand(Stand s){
 		
+		/*
 		System.out.println("NUMERO DO NIF: "+s.getNumeroNIF());
 		System.out.println("NOME DO STAND: "+s.getNomeStand());
 		System.out.println("MORADA DO STAND: "+s.getMorada());
 		System.out.println("TELEFONE DO STAND: "+s.getTelefone());
 		System.out.println("NUMERO DA CONTA STAND: "+s.getContaBancaria().getNumeroConta());
-		System.out.println("SALDO DA CONTA STAND: "+s.getContaBancaria().getSaldo());
+		System.out.println("SALDO DA CONTA STAND: "+s.getContaBancaria().getSaldo());*/
 		
+		Stand novo;
+		novo = new Stand(bd.reg.getNumeroNIF(),bd.reg.getNomeStand(),bd.reg.getMorada(),bd.reg.getTelefone(),bd.reg.getContaBancaria());
+		
+		return novo;
 	}
 	
 	public void addCliente(String nome){
@@ -41,7 +54,7 @@ public class GestaoStand {
 		if(preco<=s.getContaBancaria().getSaldo()){
 			Carro c = new Carro(bd.carrosStand.size(), marca, modelo, placa, preco);
 			bd.carrosStand.add(c);
-			s.setContaBancaria(s.getContaBancaria().getSaldo()-preco);
+			//s.setContaBancaria(s.getContaBancaria().getSaldo()-preco);
 		}
 	}
 	
@@ -50,7 +63,7 @@ public class GestaoStand {
 		if(preco<=bd.conta.get(numConta).getSaldo()){
 			Carro c = new Carro(bd.carrosStand.size(), marca, modelo, placa, preco);
 			bd.carrosStand.remove(c);
-			s.setContaBancaria(s.getContaBancaria().getSaldo()+preco);
+			//s.setContaBancaria(s.getContaBancaria().getSaldo()+preco);
 		}
 	}
 }

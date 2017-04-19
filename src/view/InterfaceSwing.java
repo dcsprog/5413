@@ -28,6 +28,7 @@ import model.Pessoa;
 import java.awt.SystemColor;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.awt.event.ActionEvent;
 
 public class InterfaceSwing {
@@ -58,12 +59,15 @@ public class InterfaceSwing {
 	
 	static int id;
 	//static int idLog;
-	static int cont=0;
+	//static int cont=0;
 	static MockupData bd;
-	static GestaoConta g = new GestaoConta();
+	static GestaoConta g;
+	static GestaoStand gs;
 	
 	public InterfaceSwing() {
 		bd = new MockupData();
+		g = new GestaoConta();
+		gs = new GestaoStand();
 	}
 	
 	
@@ -397,6 +401,7 @@ public void menuFuncionarioStand() {
 	janelaRegStand.getContentPane().setBackground(SystemColor.desktop);
 	janelaRegStand.setBounds(100, 100, 450, 319);
 	janelaRegStand.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	janelaRegStand.setLocationRelativeTo(null);
 	janelaRegStand.setVisible(true);
 	
 	JLabel lblNewLabel = new JLabel("REGISTO DO STAND");
@@ -443,6 +448,17 @@ public void menuFuncionarioStand() {
 	btnREGSTAND.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			
+			if(!txtNome.getText().isEmpty()&&!txtMorada.getText().isEmpty()&&!txtTelefone.getText().isEmpty()&&!txtNif.getText().isEmpty()){
+				janelaRegStand.setVisible(false);
+				gs.addStand(Integer.parseInt(txtNif.getText()),txtNome.getText(),txtMorada.getText(),txtTelefone.getText());
+				bd.existe=true;
+				/*System.out.println(bd.reg.getNumeroNIF()+bd.reg.getNomeStand()+
+						bd.reg.getMorada()+bd.reg.getTelefone()+bd.reg.getContaBancaria().getPessoa().getNome());
+				janelaRegStand.setVisible(false);*/
+				menuPrincipalStand();
+			}else{
+				JOptionPane.showMessageDialog(null, "TODOS OS CAMPOS SAO DE PREENCHIMENTO OBRIGATORIO!",null,JOptionPane.INFORMATION_MESSAGE);
+			}
 			
 			
 		}
@@ -499,7 +515,8 @@ public void menuFuncionarioStand() {
 				.addContainerGap(20, Short.MAX_VALUE))
 	);
 	janelaRegStand.getContentPane().setLayout(groupLayout);
-}
+	
+	}
 	
 	public void menuBanco(){
 		
@@ -816,9 +833,7 @@ public void menuFuncionarioStand() {
 				catch (Exception e1) {
 					e1.getCause();
 				}
-				
-				
-				
+	
 			}
 		});
 		
@@ -935,21 +950,27 @@ public void menuFuncionarioStand() {
 				char[] passLogin = passwordFieldLogin.getPassword();
 				String passString = new String(passLogin);
 				String nomeLog = textFieldNomeLogin.getText();
-				
+				boolean correto=false;
+				int contaList = 0;
+				int cont = 0;
 				//oufor(int c=0; c<bd.conta.size();c++)
-				if(!bd.conta.isEmpty()){
-					for(Conta c:bd.conta){
-						if(nomeLog.equals(bd.conta.get(0).getPessoa().getNome()) && passString.equals(bd.conta.get(0).getSenha()))
+				if(!MockupData.conta.isEmpty()){
+					for (Conta c: bd.conta) {
+						//Conta c = iterator.next();
+						if(nomeLog.equals(c.getPessoa().getNome())&&passString.equals(c.getSenha()))
 						{
-							int idLog=bd.conta.get(0).getNumeroConta();
+							int idLog=c.getNumeroConta();
 							janelaLogin.setVisible(false);
 							menuBCliente(idLog);
-						
-						}else{
+							nomeLog =null;
+							passLogin=null;
+							passString=null;
+							correto=true;
 							
-							//System.out.println(nomeLog+passLogin+"-->"+bd.conta.get(c).getSenha());
+						}else{
+							//System.out.println(nomeLog+passString+c.getPessoa().getNome()+c.getSenha());
 							cont++;
-							JOptionPane.showMessageDialog(null, "AS DADOS INSERIDOS NAO CORRESPONDEM!",null,JOptionPane.INFORMATION_MESSAGE);
+							contaList++; 
 							textFieldNomeLogin.setText(null);
 							passwordFieldLogin.setText(null);
 						}
@@ -958,6 +979,9 @@ public void menuFuncionarioStand() {
 						janelaLogin.setVisible(false);
 						menuBanco();
 						cont=0;
+					}
+					if(correto==false&&contaList==MockupData.conta.size()){
+						JOptionPane.showMessageDialog(null, "AS DADOS INSERIDOS NAO CORRESPONDEM!",null,JOptionPane.INFORMATION_MESSAGE);
 					}
 				}else{
 					JOptionPane.showMessageDialog(null, "NAO EXISTEM NENHUMA CONTA REGISTADA!",null,JOptionPane.INFORMATION_MESSAGE);
@@ -1033,10 +1057,11 @@ public void menuFuncionarioStand() {
 				if(fvalor.getText()==null&& v<0){
 					JOptionPane.showMessageDialog(null, "NENHUM VALOR INTRODUZIDO",null,JOptionPane.INFORMATION_MESSAGE);
 				}else{
-					bd.conta.get(idL).setSaldo(bd.conta.get(idL).getSaldo()+v);
+					//bd.conta.get(idL).setSaldo(bd.conta.get(idL).getSaldo()+v);
+					g.depositar(idL, v);
 					janelaDepositar.setVisible(false);
-					//menuBCliente(idL);
-					janelaBCliente.setVisible(true);
+					menuBCliente(idL);
+					//janelaBCliente.setVisible(true);
 					
 				}
 			}

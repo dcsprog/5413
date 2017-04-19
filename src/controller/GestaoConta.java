@@ -53,7 +53,7 @@ public class GestaoConta {
 		
 	}
 	
-	public void levantar(int num, float valor){
+	public void levantar(int num, double valor){
 	//	num-=1;
 		if(bd.conta.size()!=0){
 			if(num==bd.conta.get(num).getNumeroConta()){
