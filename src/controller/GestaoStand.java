@@ -54,7 +54,11 @@ public class GestaoStand {
 		if(preco<=s.getContaBancaria().getSaldo()){
 			Carro c = new Carro(bd.carrosStand.size(), marca, modelo, placa, preco);
 			bd.carrosStand.add(c);
+			String p= s.getContaBancaria().getPessoa().getNome();
+			Pessoa ps = new Pessoa(p);
+			Conta c1 = new Conta(s.getContaBancaria().getNumeroConta(),s.getContaBancaria().getSaldo()-preco,ps,s.getContaBancaria().getSenha());
 			//s.setContaBancaria(s.getContaBancaria().getSaldo()-preco);
+			bd.reg.setContaBancaria(c1);
 		}
 	}
 	
@@ -64,6 +68,9 @@ public class GestaoStand {
 			Carro c = new Carro(bd.carrosStand.size(), marca, modelo, placa, preco);
 			bd.carrosStand.remove(c);
 			//s.setContaBancaria(s.getContaBancaria().getSaldo()+preco);
+			String p= s.getContaBancaria().getPessoa().getNome();
+			Pessoa ps = new Pessoa(p);
+			Conta c1 = new Conta(s.getContaBancaria().getNumeroConta(),s.getContaBancaria().getSaldo()+preco,ps,s.getContaBancaria().getSenha());
 		}
 	}
 }
