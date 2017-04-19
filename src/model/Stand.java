@@ -5,7 +5,7 @@ public class Stand {
 	public Stand(){
 		
 	}
-	
+	//
 	public Stand(int numeroNIF,String nomeStand, String morada, String telefone, Conta contaBancaria) {
 		super();
 		this.numeroNIF = numeroNIF;

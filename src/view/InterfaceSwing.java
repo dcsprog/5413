@@ -749,7 +749,7 @@ public class InterfaceSwing {
 			JOptionPane.showMessageDialog(null, "NAO EXISTEM MAIS REGISTOS!",null,JOptionPane.INFORMATION_MESSAGE);
 			//menuBanco();
 		}
-	//
+
 		JButton btnNewButton = new JButton("CONFIRMAR");
 		btnNewButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {

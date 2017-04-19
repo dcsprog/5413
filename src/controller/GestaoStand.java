@@ -59,7 +59,7 @@ public class GestaoStand {
 			String p= s.getContaBancaria().getPessoa().getNome();
 			Pessoa ps = new Pessoa(p);
 			Conta c1 = new Conta(s.getContaBancaria().getNumeroConta(),s.getContaBancaria().getSaldo()-preco,ps,s.getContaBancaria().getSenha());
-			//s.setContaBancaria(s.getContaBancaria().getSaldo()-preco);
+			//s.setContaBancaria(s.getContaBancaria().getSaldo()-preco);//
 			bd.reg.setContaBancaria(c1);
 			JOptionPane.showMessageDialog(null, "COMPRA EFETUADA COM SUCESSO",null,JOptionPane.INFORMATION_MESSAGE);
 		}else{

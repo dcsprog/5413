@@ -38,7 +38,7 @@ public class GestaoConta {
 	}
 	
 	public void depositar(int numConta, double valor){
-		//numConta-=1;
+		//numConta-=1;//
 		if(bd.conta.size()!=0){
 			if(numConta==bd.conta.get(numConta).getNumeroConta()){
 				bd.conta.get(numConta).setSaldo(bd.conta.get(numConta).getSaldo()+valor);
