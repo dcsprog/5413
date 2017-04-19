@@ -93,7 +93,7 @@ public class Interface {
 		System.out.println("INTRODUZA O NUMERO DE CONTA: ");
 		int num = n.nextInt();
 		System.out.println("INTRODUZA O VALOR: ");
-		float valor = n.nextFloat();
+		double valor = n.nextFloat();
 		g.levantar(num, valor);
 		
 	}
@@ -104,7 +104,8 @@ public class Interface {
 		int numR = n.nextInt();
 		System.out.println("INTRODUZA O NUMERO DA CONTA DE DESTINO: ");
 		int numD = n.nextInt();
-		g.transferir(numR, numD);
+		double v = 20;
+		g.transferir(numR, numD,v);
 		
 	}
 	
@@ -112,7 +113,7 @@ public class Interface {
 		
 		System.out.println("INTRODUZA O NUMERO DA CONTA: ");
 		int num = n.nextInt();
-		float c = g.verificarSaldo(num);
+		double c = g.verificarSaldo(num);
 		System.out.println("SALDO: "+c);
 	}
 	

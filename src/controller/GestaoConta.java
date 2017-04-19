@@ -42,6 +42,7 @@ public class GestaoConta {
 		if(bd.conta.size()!=0){
 			if(numConta==bd.conta.get(numConta).getNumeroConta()){
 				bd.conta.get(numConta).setSaldo(bd.conta.get(numConta).getSaldo()+valor);
+				JOptionPane.showMessageDialog(null, "DEPOSITO EFETUADO COM SUCESSO",null,JOptionPane.INFORMATION_MESSAGE);
 			}else{
 				//System.out.println("\tNUMEO DE CONTA É INVALIDO\n");
 				JOptionPane.showMessageDialog(null, "NUMEO DE CONTA É INVALIDO!",null,JOptionPane.INFORMATION_MESSAGE);
@@ -55,10 +56,11 @@ public class GestaoConta {
 	
 	public void levantar(int num, double valor){
 	//	num-=1;
-		if(bd.conta.size()!=0){
+		if(!bd.conta.isEmpty()){
 			if(num==bd.conta.get(num).getNumeroConta()){
 				if(valor<bd.conta.get(num).getSaldo()){
 					bd.conta.get(num).setSaldo(bd.conta.get(num).getSaldo()-valor);
+					JOptionPane.showMessageDialog(null, "LEVANTAMENTO EFETUADO COM SUCESSO",null,JOptionPane.INFORMATION_MESSAGE);
 				}else{
 					//System.out.println("\nSALDO INSUFICIENTE\n");
 					JOptionPane.showMessageDialog(null, "SALDO INSUFICIENTE!",null,JOptionPane.INFORMATION_MESSAGE);
@@ -74,17 +76,18 @@ public class GestaoConta {
 		}
 	}
 	
-	public void transferir(int numContaR, int numContaD){
+	public void transferir(int numContaR, int numContaD,double v){
 		//numContaR-=1;
 		//numContaD-=1;
-		if(bd.conta.size()!=0){
+		if(!bd.conta.isEmpty()){
 			if(numContaR==bd.conta.get(numContaR).getNumeroConta()){
-				System.out.println("INTRODUZA O VALOR A TRANSFEREIR: ");
-				float v=n.nextFloat();
+				//System.out.println("INTRODUZA O VALOR A TRANSFEREIR: ");
+				//float v=n.nextFloat();
 				if(v<=bd.conta.get(numContaR).getSaldo()){
 					bd.conta.get(numContaR).setSaldo(bd.conta.get(numContaR).getSaldo()-v);
 					if(numContaD==bd.conta.get(numContaD).getNumeroConta()){
 						bd.conta.get(numContaD).setSaldo(bd.conta.get(numContaD).getSaldo()+v);
+						JOptionPane.showMessageDialog(null, "TRANSFERENCIA EFETUADA COM SUCESSO",null,JOptionPane.INFORMATION_MESSAGE);
 					}else{
 						//System.out.println("NUMERO DA CONTA DO DESTINO E INVALIDO");
 						JOptionPane.showMessageDialog(null, "NUMEO DE CONTA DO DESTINO É INVALIDO!",null,JOptionPane.INFORMATION_MESSAGE);
@@ -104,9 +107,9 @@ public class GestaoConta {
 	}
 	
 	
-	public float verificarSaldo(int num){
+	public double verificarSaldo(int num){
 		//num-=1;
-		float cs=0;
+		double cs=0;
 		for(int i=0; i<bd.conta.size();i++){
 			if(num==bd.conta.get(i).getNumeroConta()){
 				cs+=bd.conta.get(i).getSaldo();

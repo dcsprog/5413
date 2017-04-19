@@ -28,6 +28,7 @@ import model.Pessoa;
 import java.awt.SystemColor;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.awt.event.ActionEvent;
 
@@ -46,6 +47,8 @@ public class InterfaceSwing {
 	private JFrame janelaLogin;
 	private JFrame janelaDepositar;
 	private JFrame janelaRegStand;
+	private JFrame janelaLevantar;
+	private JFrame janelaTransferir;
 	private JTextField textFieldNome;
 	private JTextField textFieldNumero;
 	private JTextField textFieldSaldo;
@@ -74,6 +77,7 @@ public class InterfaceSwing {
 	public void menuInicial() {
 		
 		janelaPrincipal = new JFrame();
+		janelaPrincipal.setResizable(false);
 		janelaPrincipal.setType(Type.UTILITY);
 		janelaPrincipal.getContentPane().setBackground(SystemColor.desktop);
 		janelaPrincipal.setBounds(100, 100, 450, 300);
@@ -146,6 +150,7 @@ public class InterfaceSwing {
 	public void menuPrincipalStand() {
 		
 		janelaPrincipalStand = new JFrame();
+		janelaPrincipalStand.setResizable(false);
 		janelaPrincipalStand.setType(Type.UTILITY);
 		janelaPrincipalStand.setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		janelaPrincipalStand.setResizable(false);
@@ -306,6 +311,7 @@ public class InterfaceSwing {
 public void menuFuncionarioStand() {
 		
 		janelaFuncionarioStand = new JFrame();
+		janelaFuncionarioStand.setResizable(false);
 		janelaFuncionarioStand.setType(Type.UTILITY);
 		janelaFuncionarioStand.setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		janelaFuncionarioStand.setResizable(false);
@@ -397,6 +403,7 @@ public void menuFuncionarioStand() {
 	private void menuRegStand() {
 		
 	janelaRegStand = new JFrame();
+	janelaRegStand.setResizable(false);
 	janelaRegStand.setType(Type.UTILITY);
 	janelaRegStand.getContentPane().setBackground(SystemColor.desktop);
 	janelaRegStand.setBounds(100, 100, 450, 319);
@@ -521,6 +528,7 @@ public void menuFuncionarioStand() {
 	public void menuBanco(){
 		
 		janelaPBanco = new JFrame();
+		janelaPBanco.setResizable(false);
 		janelaPBanco.setType(Type.UTILITY);
 		janelaPBanco.getContentPane().setForeground(SystemColor.text);
 		janelaPBanco.getContentPane().setBackground(SystemColor.desktop);
@@ -595,6 +603,7 @@ public void menuFuncionarioStand() {
 	public void menuFuncBanco() {
 		
 		janelaFuncBanco = new JFrame();
+		janelaFuncBanco.setResizable(false);
 		janelaFuncBanco.setType(Type.UTILITY);
 		janelaFuncBanco.getContentPane().setForeground(SystemColor.text);
 		janelaFuncBanco.getContentPane().setBackground(SystemColor.desktop);
@@ -672,6 +681,7 @@ public void menuFuncionarioStand() {
 	public void regCli() {
 
 		janelaCliBanco = new JFrame();
+		janelaCliBanco.setResizable(false);
 		janelaCliBanco.setModalExclusionType(ModalExclusionType.TOOLKIT_EXCLUDE);
 		janelaCliBanco.getContentPane().setBackground(SystemColor.desktop);
 		janelaCliBanco.setType(Type.UTILITY);
@@ -773,6 +783,7 @@ public void menuFuncionarioStand() {
 	private void menuListarConta() {
 		
 		janelaListarConta = new JFrame();
+		janelaListarConta.setResizable(false);
 		janelaListarConta.setType(Type.UTILITY);
 		janelaListarConta.setBounds(100, 100, 479, 164);
 		janelaListarConta.setLocationRelativeTo(null);
@@ -801,7 +812,7 @@ public void menuFuncionarioStand() {
 		
 		textFieldSaldo = new JTextField();
 		textFieldSaldo.setColumns(10);
-		
+		/*
 		if(!bd.conta.isEmpty()){
 			textFieldNome.setText(bd.conta.get(id).getPessoa().getNome());
 			textFieldNumero.setText(Integer.toString(bd.conta.get(id).getNumeroConta()));
@@ -810,7 +821,18 @@ public void menuFuncionarioStand() {
 			janelaListarConta.setVisible(false);
 			JOptionPane.showMessageDialog(null, "NAO EXISTEM MAIS REGISTOS!",null,JOptionPane.INFORMATION_MESSAGE);
 			menuBanco();
+		}*/
+		if(!bd.conta.isEmpty()){
+			textFieldNome.setText(bd.conta.get(0).getPessoa().getNome());
+			textFieldNumero.setText(Integer.toString(bd.conta.get(0).getNumeroConta()));
+			textFieldSaldo.setText(Double.toString(bd.conta.get(0).getSaldo()));
+		}else{
+			janelaListarConta.setVisible(false);
+			JOptionPane.showMessageDialog(null, "NAO EXISTEM MAIS REGISTOS!",null,JOptionPane.INFORMATION_MESSAGE);
+			menuBanco();
 		}
+		
+		
 		
 		
 		JButton btnProx = new JButton("PROXIMO");
@@ -921,7 +943,9 @@ public void menuFuncionarioStand() {
 	}
 	
 	private void login() {
+		
 		janelaLogin = new JFrame();
+		janelaLogin.setResizable(false);
 		janelaLogin.setFont(new Font("Century Gothic", Font.BOLD, 12));
 		janelaLogin.getContentPane().setBackground(SystemColor.desktop);
 		janelaLogin.setBounds(100, 100, 434, 143);
@@ -945,24 +969,31 @@ public void menuFuncionarioStand() {
 		
 		JButton btnConfirmaLogin = new JButton("CONFIRMAR");
 		btnConfirmaLogin.addActionListener(new ActionListener() {
+			@SuppressWarnings("static-access")
 			public void actionPerformed(ActionEvent e) {
 				
 				char[] passLogin = passwordFieldLogin.getPassword();
 				String passString = new String(passLogin);
-				String nomeLog = textFieldNomeLogin.getText();
+				///String nomeLog = textFieldNomeLogin.getText();
 				boolean correto=false;
 				int contaList = 0;
 				int cont = 0;
 				//oufor(int c=0; c<bd.conta.size();c++)
 				if(!MockupData.conta.isEmpty()){
-					for (Conta c: bd.conta) {
+					for(Conta c: bd.conta){
+					//for (int i = 0; i < bd.conta.size(); i++) {
+						//Conta c = bd.conta.get(i);
 						//Conta c = iterator.next();
-						if(nomeLog.equals(c.getPessoa().getNome())&&passString.equals(c.getSenha()))
+						//if(nomeLog.equals(c.getPessoa().getNome())&&passString.equals(c.getSenha()))
+						//if(nomeLog.equals(bd.conta.get(i).getPessoa().getNome()) && passString.equals(bd.conta.get(i).getSenha()))
+						if( textFieldNomeLogin.getText().equals(c.getPessoa().getNome())&&passString.equals(c.getSenha()))
 						{
-							int idLog=c.getNumeroConta();
+							//int idLog=bd.conta.get(i).getNumeroConta();
+							int idLog = c.getNumeroConta();
 							janelaLogin.setVisible(false);
 							menuBCliente(idLog);
-							nomeLog =null;
+							//nomeLog =null;
+							textFieldNomeLogin.setText(null);
 							passLogin=null;
 							passString=null;
 							correto=true;
@@ -1033,6 +1064,7 @@ public void menuFuncionarioStand() {
 	private void depositar(int idL) {
 		
 		janelaDepositar = new JFrame();
+		janelaDepositar.setResizable(false);
 		janelaDepositar.getContentPane().setBackground(SystemColor.desktop);
 		janelaDepositar.setBounds(100, 100, 434, 141);
 		janelaDepositar.setType(Type.UTILITY);
@@ -1091,16 +1123,151 @@ public void menuFuncionarioStand() {
 					.addContainerGap(15, Short.MAX_VALUE))
 		);
 		janelaDepositar.getContentPane().setLayout(groupLayout);
-		
-		
-		
+
 	}
 
+	private void levantar(int idL) {
+		
+		janelaLevantar = new JFrame();
+		janelaLevantar.setResizable(false);
+		janelaLevantar.getContentPane().setBackground(SystemColor.desktop);
+		janelaLevantar.setBounds(100, 100, 434, 141);
+		janelaLevantar.setType(Type.UTILITY);
+		janelaLevantar.setLocationRelativeTo(null);
+		janelaLevantar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
+		janelaLevantar.setVisible(true);
+		
+		JLabel lblValor = new JLabel("VALOR:");
+		lblValor.setForeground(SystemColor.textHighlightText);
+		lblValor.setFont(new Font("Century Gothic", Font.BOLD, 11));
+		
+		JTextField fvalor = new JTextField();
+		
+		JButton btnConfirmar = new JButton("CONFIRMAR");
+		btnConfirmar.setFont(new Font("Century Gothic", Font.BOLD, 11));
+		btnConfirmar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				double v = Double.parseDouble(fvalor.getText());
+				if(fvalor.getText()==null&& v<0){
+					JOptionPane.showMessageDialog(null, "NENHUM VALOR INTRODUZIDO",null,JOptionPane.INFORMATION_MESSAGE);
+				}else{
+					g.levantar(idL, v);
+					janelaLevantar.setVisible(false);
+					menuBCliente(idL);
+				}
+			}
+		});
+		GroupLayout groupLayout = new GroupLayout(janelaLevantar.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(108)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(btnConfirmar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+							.addComponent(lblValor)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(fvalor, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(126, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addGap(30)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblValor)
+						.addComponent(fvalor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnConfirmar)
+					.addContainerGap(15, Short.MAX_VALUE))
+		);
+		janelaLevantar.getContentPane().setLayout(groupLayout);
+		
+	}
 	
+	private void transferir(int idL) {
+		
+		janelaTransferir = new JFrame();
+		janelaTransferir.setResizable(false);
+		janelaTransferir.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		janelaTransferir.setType(Type.UTILITY);
+		janelaTransferir.getContentPane().setBackground(SystemColor.desktop);
+		janelaTransferir.setBounds(100, 100, 450, 181);
+		janelaTransferir.setLocationRelativeTo(null);
+		janelaTransferir.setVisible(true);
+
+		JLabel lblValor = new JLabel("VALOR:");
+		lblValor.setForeground(SystemColor.textHighlightText);
+		lblValor.setFont(new Font("Century Gothic", Font.BOLD, 11));
+		
+		JTextField fvalor = new JTextField();
+		
+		JLabel lblNumero = new JLabel("NUMERO:");
+		lblNumero.setFont(new Font("Dialog", Font.BOLD, 11));
+		lblNumero.setForeground(SystemColor.textHighlightText);
+		
+		JTextField textField = new JTextField();
+		textField.setColumns(10);
+		
+		JButton btnConfirmar = new JButton("CONFIRMAR");
+		btnConfirmar.setFont(new Font("Century Gothic", Font.BOLD, 11));
+		btnConfirmar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				double v = Double.parseDouble(fvalor.getText());
+				if(fvalor.getText()==null&& v<0){
+					JOptionPane.showMessageDialog(null, "NENHUM VALOR INTRODUZIDO",null,JOptionPane.INFORMATION_MESSAGE);
+				}else if(v <= bd.conta.get(idL).getSaldo()){
+					g.transferir(idL, Integer.parseInt(textField.getText()),v);
+					janelaTransferir.setVisible(false);
+					menuBCliente(idL);
+					
+				}
+			}
+		});
+		
+		
+		GroupLayout groupLayout = new GroupLayout(janelaTransferir.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addGap(82)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblNumero)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+							.addComponent(lblValor)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(fvalor, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnConfirmar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGap(79))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap(56, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblValor)
+						.addComponent(fvalor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNumero)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addComponent(btnConfirmar)
+					.addGap(40))
+		);
+		janelaTransferir.getContentPane().setLayout(groupLayout);
+		
+	}
 	
 	private void menuBCliente(int idLogin){
 		
 		janelaBCliente = new JFrame();
+		janelaBCliente.setResizable(false);
 		janelaBCliente.setType(Type.UTILITY);
 		janelaBCliente.getContentPane().setBackground(SystemColor.desktop);
 		janelaBCliente.setBounds(100, 100, 450, 300);
@@ -1124,7 +1291,8 @@ public void menuFuncionarioStand() {
 		JButton btnLevantar = new JButton("LEVANTAR");
 		btnLevantar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				janelaBCliente.setVisible(false);
+				levantar(idLogin);
 			}
 		});
 		btnLevantar.setFont(new Font("Century Gothic", Font.BOLD, 11));
@@ -1132,6 +1300,8 @@ public void menuFuncionarioStand() {
 		JButton btnTransferir = new JButton("TRANSFERIR");
 		btnTransferir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				janelaBCliente.setVisible(false);
+				transferir(idLogin);
 			}
 		});
 		btnTransferir.setFont(new Font("Century Gothic", Font.BOLD, 11));
